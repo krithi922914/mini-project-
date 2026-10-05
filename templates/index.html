@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>SmartTour - Smart Travel Planning</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+    <nav class="navbar">
+        <div class="logo">SmartTour</div>
+
+        <div class="nav-links">
+            <a href="/">Home</a>
+            <a href="#discover">Discover</a>
+            <a href="#about">About</a>
+            <a href="#business">For Businesses</a>
+        </div>
+    </nav>
+
+
+    <section class="hero">
+
+        <div class="hero-content">
+
+            <p class="tagline">TRAVEL • DISCOVER • EXPERIENCE</p>
+
+            <h1>
+                Plan your journey,
+                <span>your way.</span>
+            </h1>
+
+            <p class="hero-text">
+                SmartTour connects you with hotels, attractions,
+                restaurants and local experiences while helping
+                you create a personalized travel plan.
+            </p>
+
+            <a href="#discover" class="start-button">
+                Start Planning
+            </a>
+
+        </div>
+
+    </section>
+
+
+    <section id="discover" class="planning-section">
+
+        <div class="section-heading">
+            <p class="small-title">SMART PLANNING</p>
+
+            <h2>
+                Tell us what you want.
+            </h2>
+
+            <p>
+                We'll help you discover suitable travel options
+                based on your preferences.
+            </p>
+        </div>
+
+
+        <form action=""/recommend" method="POST">
+        </form>
+
+            <div class="form-group">
+                <label for="destination">Destination</label>
+
+                <input
+                    type="text"
+                    id="destination"
+                    placeholder="Example: Mysore"
+                >
+            </div>
+
+
+            <div class="form-group">
+                <label for="budget">Budget (₹)</label>
+
+                <input
+                    type="number"
+                    id="budget"
+                    placeholder="Example: 10000"
+                >
+            </div>
+
+
+            <div class="form-group">
+                <label for="days">Available Days</label>
+
+                <input
+                    type="number"
+                    id="days"
+                    min="1"
+                    placeholder="Example: 3"
+                >
+            </div>
+
+
+            <div class="form-group">
+                <label for="interest">Interest</label>
+
+                <select id="interest">
+
+                    <option value="">
+                        Select your interest
+                    </option>
+
+                    <option value="history">
+                        History
+                    </option>
+
+                    <option value="nature">
+                        Nature
+                    </option>
+
+                    <option value="food">
+                        Food
+                    </option>
+
+                    <option value="adventure">
+                        Adventure
+                    </option>
+
+                    <option value="culture">
+                        Culture
+                    </option>
+
+                </select>
+            </div>
+
+
+            <div class="form-group">
+                <label for="travel-style">Travel Style</label>
+
+                <select id="travel-style">
+
+                    <option value="">
+                        Select travel style
+                    </option>
+
+                    <option value="relaxed">
+                        Relaxed
+                    </option>
+
+                    <option value="adventure">
+                        Adventure
+                    </option>
+
+                    <option value="cultural">
+                        Cultural
+                    </option>
+
+                    <option value="budget">
+                        Budget Friendly
+                    </option>
+
+                </select>
+            </div>
+
+
+            <button type="submit">
+    Get Recommendations
+</button>
+
+        </form>
+
+    </section>
+
+
+    <section id="about" class="about-section">
+
+        <div>
+            <p class="small-title">WHY SMARTTOUR?</p>
+
+            <h2>
+                One connected tourism journey.
+            </h2>
+        </div>
+
+        <div class="features">
+
+            <div class="feature">
+                <h3>Discover</h3>
+                <p>
+                    Explore attractions, hotels, restaurants
+                    and local experiences.
+                </p>
+            </div>
+
+            <div class="feature">
+                <h3>Personalize</h3>
+                <p>
+                    Get recommendations based on your
+                    budget, interests and travel preferences.
+                </p>
+            </div>
+
+            <div class="feature">
+                <h3>Plan</h3>
+                <p>
+                    Organize your available time into
+                    a practical travel itinerary.
+                </p>
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <section id="business" class="business-section">
+
+        <p class="small-title">FOR TOURISM BUSINESSES</p>
+
+        <h2>
+            Help travelers discover your business.
+        </h2>
+
+        <p>
+            Hotels, local businesses and tourism providers
+            can manage their services, offers and availability
+            through SmartTour.
+        </p>
+
+        <button class="business-button">
+            Business Portal
+        </button>
+
+    </section>
+
+
+    <footer>
+
+        <div class="logo">SmartTour</div>
+
+        <p>
+            Smarter planning. Better experiences.
+        </p>
+
+    </footer>
+
+</body>
+</html>

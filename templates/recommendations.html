@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>SmartTour - Recommendations</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+    <nav class="navbar">
+
+        <div class="logo">
+            SmartTour
+        </div>
+
+        <div class="nav-links">
+            <a href="/">Home</a>
+            <a href="/">Discover</a>
+            <a href="/">About</a>
+            <a href="/">For Businesses</a>
+        </div>
+
+    </nav>
+
+
+    <section class="recommendation-page">
+
+        <h1>Your SmartTour Recommendations</h1>
+
+        <p>
+            Destination: <strong>{{ destination }}</strong>
+        </p>
+
+        <p>
+            Budget: ₹{{ budget }}
+        </p>
+
+        <p>
+            Days: {{ days }}
+        </p>
+
+        <p>
+            Interest: {{ interest }}
+        </p>
+
+        <p>
+            Travel Style: {{ travel_style }}
+        </p>
+
+
+        <div class="recommendation-container">
+
+            {% if places %}
+
+                {% for place in places %}
+
+                    <div class="place-card">
+
+                        <h2>{{ place["name"] }}</h2>
+
+                        <p>
+                            {{ place["description"] }}
+                        </p>
+
+                        <p>
+                            ⭐ Rating: {{ place["rating"] }}
+                        </p>
+
+                        <p>
+                            💰 Entry Cost: ₹{{ place["price"] }}
+                        </p>
+
+                        <p>
+                            ⏱ Duration: {{ place["duration"] }} hours
+                        </p>
+
+                    </div>
+
+                {% endfor %}
+
+            {% else %}
+
+                <div class="no-results">
+
+                    <h2>No matching places found 😔</h2>
+
+                    <p>
+                        Try changing your interest or travel style.
+                    </p>
+
+                </div>
+
+            {% endif %}
+
+        </div>
+
+
+        <a href="/" class="back-button">
+            ← Plan Again
+        </a>
+
+    </section>
+
+</body>
+
+</html>
