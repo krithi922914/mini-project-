@@ -1,0 +1,238 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register Your Business | SmartTour</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            padding: 30px 15px;
+            font-family: Arial, sans-serif;
+            background: #eef5ef;
+            color: #183c2c;
+        }
+
+        .container {
+            max-width: 650px;
+            margin: 20px auto;
+            padding: 30px;
+            background: white;
+            border-radius: 14px;
+            box-shadow: 0 4px 20px #0001;
+        }
+
+        h1 {
+            color: #174c35;
+            margin-bottom: 8px;
+        }
+
+        p {
+            color: #666;
+        }
+
+        label {
+            display: block;
+            margin-top: 17px;
+            margin-bottom: 7px;
+            font-weight: bold;
+        }
+
+        input, select, textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 7px;
+            font-size: 15px;
+        }
+
+        textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+
+        button {
+            width: 100%;
+            margin-top: 25px;
+            padding: 14px;
+            border: none;
+            border-radius: 7px;
+            background: #087f68;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        button:disabled {
+            opacity: 0.6;
+            cursor: wait;
+        }
+
+        .message {
+            margin-top: 18px;
+            font-weight: bold;
+        }
+
+        .success {
+            color: #16834b;
+        }
+
+        .error {
+            color: #c0392b;
+        }
+
+        .links {
+            margin-top: 22px;
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        a {
+            color: #087f68;
+            text-decoration: none;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <h1>Register Your Business ✦</h1>
+
+    <p>
+        Join SmartTour and connect your tourism business
+        with travellers.
+    </p>
+
+    <form id="business-form">
+
+        <label for="business_name">Business Name *</label>
+        <input type="text" id="business_name"
+               name="business_name" required>
+
+        <label for="category">Business Category *</label>
+        <select id="category" name="category" required>
+            <option value="">Select Category</option>
+            <option value="Homestay">Homestay</option>
+            <option value="Hotel">Hotel</option>
+            <option value="Resort">Resort</option>
+            <option value="Guest House">Guest House</option>
+            <option value="Restaurant">Restaurant</option>
+            <option value="Cafe">Cafe</option>
+            <option value="Local Guide">Local Guide</option>
+            <option value="Travel Provider">Travel Provider</option>
+        </select>
+
+        <label for="owner_name">Owner Name *</label>
+        <input type="text" id="owner_name"
+               name="owner_name" required>
+
+        <label for="phone">Phone Number *</label>
+        <input type="tel" id="phone"
+               name="phone" required>
+
+        <label for="email">Email Address *</label>
+        <input type="email" id="email"
+               name="email" required>
+
+        <label for="location">Business Location *</label>
+        <input type="text" id="location"
+               name="location" required>
+
+        <label for="price">Price Range</label>
+        <input type="text" id="price"
+               name="price"
+               placeholder="Example: ₹1000–₹2000">
+
+        <label for="description">Business Description</label>
+        <textarea id="description"
+                  name="description"
+                  placeholder="Tell travellers about your business"></textarea>
+
+        <label for="facilities">Facilities</label>
+        <textarea id="facilities"
+                  name="facilities"
+                  placeholder="Example: Wi-Fi, parking, food, rooms"></textarea>
+
+        <button type="submit" id="submit-button">
+            Submit Business Registration
+        </button>
+
+        <div id="message" class="message"
+             role="status" aria-live="polite"></div>
+
+    </form>
+
+    <div class="links">
+        <a href="/">← Back to SmartTour</a>
+        <a href="/local-businesses">Explore Businesses</a>
+    </div>
+
+</div>
+
+<script>
+const form = document.getElementById("business-form");
+const message = document.getElementById("message");
+const button = document.getElementById("submit-button");
+
+form.addEventListener("submit", async function(event) {
+
+    event.preventDefault();
+
+    button.disabled = true;
+    button.textContent = "Submitting...";
+    message.textContent = "";
+
+    const formData = new FormData(form);
+    const data = Object.fromEntries(formData.entries());
+
+    try {
+
+        const response = await fetch("/api/business/register", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(data)
+        });
+
+        const result = await response.json();
+
+        if (!response.ok) {
+            throw new Error(
+                result.error || result.message || "Registration failed."
+            );
+        }
+
+        message.className = "message success";
+        message.textContent =
+            "Registration submitted successfully! Your business is awaiting admin approval.";
+
+        form.reset();
+
+    } catch (error) {
+
+        message.className = "message error";
+        message.textContent = error.message;
+
+    } finally {
+
+        button.disabled = false;
+        button.textContent = "Submit Business Registration";
+
+    }
+
+});
+</script>
+
+</body>
+</html>

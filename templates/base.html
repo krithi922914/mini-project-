@@ -1,0 +1,126 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>SmartTour AI</title>
+
+    <!-- Leaflet -->
+    <link rel="stylesheet"
+          href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+
+    <!-- Google Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+          rel="stylesheet">
+
+    <!-- Our CSS -->
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+
+<body>
+
+<div class="app">
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+
+        <div class="logo">
+            <div class="logo-icon">✈</div>
+            <div>
+                <h2>SmartTour</h2>
+                <span>AI Tourism Intelligence</span>
+            </div>
+        </div>
+
+        <nav>
+
+            <a href="/" class="nav-item">
+                <span>⌂</span>
+                Dashboard
+            </a>
+
+            <a href="/local-businesses" class="nav-item">
+                <span>🏨</span>
+                Local Businesses
+            </a>
+
+            <a href="/business/register" class="nav-item">
+                <span>🏪</span>
+                Register Your Business
+            </a>
+
+            <a href="/business/admin" class="nav-item">
+                <span>⚙</span>
+                Admin Panel
+            </a>
+
+            <a href="#" class="nav-item">
+                <span>🗺</span>
+                Explore
+            </a>
+
+            <a href="#" class="nav-item">
+                <span>🤖</span>
+                AI Trip Planner
+            </a>
+
+            <a href="#" class="nav-item">
+                <span>👥</span>
+                Crowd Intelligence
+            </a>
+
+            <a href="#" class="nav-item">
+                <span>📊</span>
+                Analytics
+            </a>
+
+            <a href="#" class="nav-item">
+                <span>💬</span>
+                Tourist Reviews
+            </a>
+
+        </nav>
+
+        <div class="sidebar-bottom">
+
+            <a href="#" class="nav-item">
+                <span>⚙</span>
+                Settings
+            </a>
+
+            <div class="profile">
+                <div class="avatar">K</div>
+                <div>
+                    <strong>Tourist</strong>
+                    <small>SmartTour User</small>
+                </div>
+            </div>
+
+        </div>
+
+    </aside>
+
+    <!-- MAIN -->
+    <main class="main">
+
+        {% block content %}
+        {% endblock %}
+
+    </main>
+
+</div>
+
+<!-- Leaflet JS -->
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+{% block scripts %}
+{% endblock %}
+
+</body>
+</html>

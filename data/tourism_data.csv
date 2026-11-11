@@ -1,0 +1,21 @@
+name,category,description,latitude,longitude,rating,price,visit_time,crowd_level,popularity,nature,heritage,culture,shopping,wildlife,entertainment
+Cubbon Park,Nature,"Large urban park with greenery and walking areas",12.9763,77.5929,4.6,0,90,42,88,10,2,3,1,2,2
+Lalbagh Botanical Garden,Nature,"Historic botanical garden with plants and landscaped gardens",12.9507,77.5848,4.4,40,120,58,91,10,3,4,1,2,2
+Bangalore Palace,Heritage,"Historic palace featuring Tudor-style architecture",12.9988,77.5921,4.5,250,120,72,90,2,10,8,1,1,2
+Vidhana Soudha,Heritage,"Iconic landmark known for its grand architecture",12.9797,77.5907,4.7,0,45,65,94,1,10,8,1,1,1
+Visvesvaraya Industrial Museum,Museum,"Interactive museum focused on science and technology",12.9753,77.5963,4.5,100,100,35,80,2,4,7,1,1,3
+ISKCON Temple,Culture,"Major cultural and spiritual attraction",13.0108,77.5511,4.7,0,90,68,93,2,7,10,1,1,1
+Bannerghatta Biological Park,Wildlife,"Wildlife park with zoo and safari experiences",12.8000,77.5770,4.3,300,240,54,87,8,1,3,1,10,7
+Ulsoor Lake,Nature,"Urban lake offering scenic views and boating",12.9830,77.6200,4.1,50,75,47,72,9,2,3,1,2,4
+Commercial Street,Shopping,"Popular shopping destination with local stores",12.9821,77.6080,4.3,0,120,81,89,1,2,5,10,1,4
+Wonderla Bengaluru,Entertainment,"Large amusement and water park",12.8347,77.4010,4.5,1300,360,76,95,6,1,4,1,3,10
+Tipu Sultan's Summer Palace,Heritage,"Historic palace associated with Tipu Sultan",12.9592,77.5736,4.3,20,60,52,78,2,10,9,2,1,2
+National Gallery of Modern Art,Museum,"Art museum featuring modern Indian artworks",13.0005,77.5880,4.4,20,90,30,74,2,5,9,2,1,3
+Jawaharlal Nehru Planetarium,Science,"Planetarium offering astronomy and science programs",12.9883,77.5920,4.5,60,90,38,82,3,2,8,1,1,8
+Bangalore Fort,Heritage,"Historic fort associated with Bengaluru's early history",12.9590,77.5733,4.1,25,60,44,68,2,10,8,2,1,1
+JP Park,Nature,"Large green space suitable for relaxation and walking",13.0285,77.5570,4.2,0,90,31,64,9,1,3,1,2,2
+Innovative Film City,Entertainment,"Entertainment destination with attractions and activities",12.7285,77.4860,4.0,600,240,61,70,3,1,4,3,4,10
+Phoenix Marketcity,Shopping,"Large shopping and entertainment complex",13.0027,77.6965,4.4,0,180,79,92,1,1,5,10,1,9
+Government Museum Bengaluru,Museum,"Historic museum containing archaeological collections",12.9750,77.5960,4.2,20,90,34,70,2,6,9,1,2,2
+Bugle Rock Park,Nature,"Rocky park with greenery and city views",12.9427,77.5680,4.3,0,60,29,65,9,3,5,1,2,2
+Freedom Park,Culture,"Urban public space with historical and cultural significance",12.9785,77.5800,4.1,0,75,37,63,5,7,8,2,1,2

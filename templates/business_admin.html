@@ -1,0 +1,250 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SmartTour Admin Dashboard</title>
+
+    <style>
+        * { box-sizing: border-box; }
+
+        body {
+            margin: 0;
+            padding: 25px;
+            font-family: Arial, sans-serif;
+            background: #eef5ef;
+            color: #183c2c;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: auto;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        h1 { color: #174c35; }
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin: 25px 0;
+        }
+
+        .stat, .business-card {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 3px 12px #0001;
+        }
+
+        .stat h2 {
+            margin: 5px 0;
+            color: #087f68;
+        }
+
+        .business-card {
+            margin: 18px 0;
+        }
+
+        .business-card h3 {
+            color: #087f68;
+            margin-top: 0;
+        }
+
+        .status {
+            font-weight: bold;
+            text-transform: capitalize;
+        }
+
+        .actions {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-top: 18px;
+        }
+
+        button, .logout {
+            border: none;
+            padding: 11px 20px;
+            border-radius: 7px;
+            color: white;
+            cursor: pointer;
+            font-weight: bold;
+            text-decoration: none;
+        }
+
+        .approve { background: #16834b; }
+        .reject { background: #c0392b; }
+        .logout { background: #174c35; }
+
+        button:hover, .logout:hover {
+            opacity: 0.85;
+        }
+
+        .empty {
+            background: white;
+            padding: 25px;
+            border-radius: 10px;
+            color: #777;
+        }
+
+        #message {
+            margin: 15px 0;
+            font-weight: bold;
+        }
+
+        @media(max-width: 600px) {
+            body { padding: 15px; }
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <header>
+        <div>
+            <h1>SmartTour ✦</h1>
+            <p>Admin Dashboard – Business Management</p>
+        </div>
+
+        <a href="/business/admin/logout" class="logout">
+            Logout
+        </a>
+    </header>
+
+    <div class="stats">
+
+        <div class="stat">
+            <p>Total Businesses</p>
+            <h2>{{ businesses|length }}</h2>
+        </div>
+
+        <div class="stat">
+            <p>Pending</p>
+            <h2>{{ businesses|selectattr('status', 'equalto', 'pending')|list|length }}</h2>
+        </div>
+
+        <div class="stat">
+            <p>Approved</p>
+            <h2>{{ businesses|selectattr('status', 'equalto', 'approved')|list|length }}</h2>
+        </div>
+
+        <div class="stat">
+            <p>Rejected</p>
+            <h2>{{ businesses|selectattr('status', 'equalto', 'rejected')|list|length }}</h2>
+        </div>
+
+    </div>
+
+    <h2>Registered Businesses</h2>
+
+    <div id="message" role="status"></div>
+
+    {% if businesses %}
+
+        {% for business in businesses %}
+
+        <div class="business-card">
+
+            <h3>{{ business.business_name }}</h3>
+
+            <p><strong>Business ID:</strong> {{ business.id }}</p>
+            <p><strong>Category:</strong> {{ business.category }}</p>
+            <p><strong>Owner:</strong> {{ business.owner_name }}</p>
+            <p><strong>Phone:</strong> {{ business.phone }}</p>
+            <p><strong>Email:</strong> {{ business.email }}</p>
+            <p><strong>Location:</strong> {{ business.location }}</p>
+            <p><strong>Price:</strong> {{ business.price or 'Not provided' }}</p>
+            <p><strong>Description:</strong> {{ business.description or 'Not provided' }}</p>
+            <p><strong>Facilities:</strong> {{ business.facilities or 'Not provided' }}</p>
+
+            <p class="status">
+                Current Status: {{ business.status }}
+            </p>
+
+            <div class="actions">
+
+                <button class="approve"
+                    onclick="updateBusiness({{ business.id }}, 'approved', this)">
+                    ✓ Approve
+                </button>
+
+                <button class="reject"
+                    onclick="updateBusiness({{ business.id }}, 'rejected', this)">
+                    ✕ Reject
+                </button>
+
+            </div>
+
+        </div>
+
+        {% endfor %}
+
+    {% else %}
+
+        <div class="empty">
+            <h3>No business registrations yet.</h3>
+            <p>Register a sample business to test the approval system.</p>
+            <a href="/business/register">Register a business</a>
+        </div>
+
+    {% endif %}
+
+</div>
+
+<script>
+async function updateBusiness(id, status, button) {
+
+    if (!confirm("Are you sure you want to " + status + " this business?")) {
+        return;
+    }
+
+    const message = document.getElementById("message");
+
+    button.disabled = true;
+    message.textContent = "Updating business...";
+
+    try {
+
+        const response = await fetch(`/api/business/admin/${id}`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({ status: status })
+        });
+
+        const result = await response.json();
+
+        if (!response.ok) {
+            throw new Error(result.error || result.message || "Update failed.");
+        }
+
+        message.style.color = "green";
+        message.textContent = "Business successfully " + status + "!";
+
+        location.reload();
+
+    } catch (error) {
+
+        message.style.color = "red";
+        message.textContent = error.message;
+        button.disabled = false;
+
+    }
+}
+</script>
+
+</body>
+</html>

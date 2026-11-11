@@ -1,3 +1,20 @@
+
+/* =====================================================
+   SMARTTOUR - MAIN THEME
+===================================================== */
+
+:root {
+    --primary: #064e3b;
+    --secondary: #047857;
+    --accent: #10b981;
+    --background: #f4f8f5;
+    --surface: #ffffff;
+    --text: #18352b;
+    --muted: #64756d;
+    --border: #dce8df;
+    --shadow: 0 8px 25px rgba(0, 50, 30, 0.08);
+}
+
 * {
     margin: 0;
     padding: 0;
@@ -10,273 +27,364 @@ html {
 
 body {
     font-family: Arial, sans-serif;
-    background: #f7f7f5;
-    color: #222;
+    background: var(--background);
+    color: var(--text);
+    line-height: 1.6;
 }
 
-
-/* NAVBAR */
-
-.navbar {
-    height: 75px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 0 8%;
-    background: white;
-    border-bottom: 1px solid #eee;
-}
-
-.logo {
-    font-size: 25px;
-    font-weight: 700;
-    letter-spacing: -1px;
-}
-
-.nav-links {
-    display: flex;
-    gap: 30px;
-}
-
-.nav-links a {
+a {
     text-decoration: none;
-    color: #444;
-    font-size: 14px;
+    color: inherit;
 }
 
-.nav-links a:hover {
-    color: #000;
+button,
+input,
+select,
+textarea {
+    font: inherit;
 }
 
+/* =====================================================
+   NAVIGATION
+===================================================== */
 
-/* HERO */
-
-.hero {
-    min-height: 600px;
-    display: flex;
-    align-items: center;
-    padding: 80px 8%;
-    background:
-        linear-gradient(
-            rgba(0, 0, 0, 0.45),
-            rgba(0, 0, 0, 0.45)
-        ),
-        url("https://images.unsplash.com/photo-1524492412937-b28074a5d7da?auto=format&fit=crop&w=1800&q=80");
-
-    background-size: cover;
-    background-position: center;
-}
-
-.hero-content {
-    max-width: 700px;
+nav,
+.navbar {
+    background: var(--primary);
     color: white;
+    padding: 16px 6%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 15px;
 }
 
-.tagline,
-.small-title {
-    font-size: 12px;
-    font-weight: 700;
-    letter-spacing: 3px;
+nav h1,
+.navbar h1 {
+    font-size: 24px;
+}
+
+nav a,
+.navbar a {
+    color: white;
+    margin: 0 10px;
+    font-weight: 600;
+}
+
+nav a:hover,
+.navbar a:hover {
+    color: #a7f3d0;
+}
+
+/* =====================================================
+   GENERAL LAYOUT
+===================================================== */
+
+main,
+.container {
+    width: 90%;
+    max-width: 1200px;
+    margin: auto;
+}
+
+section {
+    padding: 45px 0;
+}
+
+section h2 {
+    color: var(--primary);
+    font-size: 27px;
+    margin-bottom: 12px;
+}
+
+section > p {
+    color: var(--muted);
     margin-bottom: 20px;
 }
 
+/* =====================================================
+   HERO
+===================================================== */
+
+.hero {
+    min-height: 360px;
+    padding: 75px 8%;
+    background: linear-gradient(
+        120deg,
+        #064e3b,
+        #047857,
+        #10b981
+    );
+    color: white;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    text-align: center;
+}
+
 .hero h1 {
-    font-size: 64px;
-    line-height: 1.05;
-    margin-bottom: 25px;
-}
-
-.hero h1 span {
-    font-style: italic;
-}
-
-.hero-text {
-    max-width: 580px;
-    font-size: 18px;
-    line-height: 1.7;
-    margin-bottom: 35px;
-}
-
-.start-button {
-    display: inline-block;
-    padding: 15px 28px;
-    background: white;
-    color: #222;
-    text-decoration: none;
-    font-weight: 600;
-    border-radius: 5px;
-}
-
-
-/* PLANNING SECTION */
-
-.planning-section {
-    padding: 100px 8%;
-    background: white;
-}
-
-.section-heading {
-    max-width: 700px;
-    margin-bottom: 50px;
-}
-
-.section-heading h2,
-.about-section h2,
-.business-section h2 {
-    font-size: 42px;
+    font-size: clamp(32px, 5vw, 52px);
     margin-bottom: 15px;
 }
 
-.section-heading p {
-    color: #666;
-    line-height: 1.7;
+.hero p {
+    max-width: 750px;
+    margin: 0 auto 20px;
+    color: #ecfdf5;
 }
 
+/* =====================================================
+   INPUTS
+===================================================== */
 
-/* FORM */
-
-.planning-form {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 25px;
-    max-width: 900px;
+input,
+select,
+textarea {
+    width: 100%;
+    padding: 12px 14px;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    background: white;
+    color: var(--text);
+    margin: 7px 0 15px;
+    outline: none;
 }
 
-.form-group {
-    display: flex;
-    flex-direction: column;
+input:focus,
+select:focus,
+textarea:focus {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.12);
 }
 
-.form-group label {
-    margin-bottom: 9px;
-    font-size: 14px;
-    font-weight: 600;
+select[multiple] {
+    min-height: 150px;
 }
 
-.form-group input,
-.form-group select {
-    padding: 15px;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    font-size: 15px;
-    background: #fafafa;
-}
+/* =====================================================
+   BUTTONS
+===================================================== */
 
-.recommend-button {
-    grid-column: span 2;
-    padding: 17px;
-    border: none;
-    border-radius: 5px;
-    background: #222;
+button,
+.btn {
+    background: var(--secondary);
     color: white;
-    font-size: 16px;
-    font-weight: 600;
+    padding: 12px 22px;
+    border: none;
+    border-radius: 8px;
     cursor: pointer;
+    font-weight: 600;
+    transition: 0.2s ease;
 }
 
-.recommend-button:hover {
-    opacity: 0.85;
+button:hover,
+.btn:hover {
+    background: var(--primary);
+    transform: translateY(-2px);
 }
 
-
-/* ABOUT */
-
-.about-section {
-    padding: 100px 8%;
-    background: #f2f1ed;
+button:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
 }
 
-.features {
+/* =====================================================
+   DESTINATION CARDS
+===================================================== */
+
+.destination-results,
+#destination-results,
+#recommendation-results,
+#hidden-gems-results {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 30px;
+    grid-template-columns: repeat(
+        auto-fit,
+        minmax(260px, 1fr)
+    );
+    gap: 22px;
+    margin-top: 25px;
+}
+
+.destination-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 22px;
+    box-shadow: var(--shadow);
+    transition: 0.25s ease;
+    overflow-wrap: anywhere;
+}
+
+.destination-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 14px 30px rgba(0, 50, 30, 0.12);
+}
+
+.destination-card h3 {
+    color: var(--primary);
+    font-size: 21px;
+    margin-bottom: 8px;
+}
+
+.destination-card p {
+    color: var(--muted);
+    margin: 7px 0;
+}
+
+.destination-details {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 15px;
+    font-weight: 600;
+    color: var(--secondary);
+}
+
+/* =====================================================
+   CROWD INDICATORS
+===================================================== */
+
+.crowd-indicator {
+    display: inline-block;
+    padding: 7px 12px;
+    border-radius: 20px;
+    font-size: 13px;
+    font-weight: 700;
+    margin-top: 10px;
+}
+
+.crowd-source {
+    font-size: 11px;
+    color: var(--muted);
+    margin-top: 7px;
+}
+
+/* =====================================================
+   PLANNER AND FEEDBACK
+===================================================== */
+
+#recommendation-form,
+#feedback-form,
+#travel-preferences {
+    background: white;
+    padding: 25px;
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    box-shadow: var(--shadow);
+    max-width: 800px;
+}
+
+#recommendation-form label,
+#feedback-form label {
+    font-weight: 600;
+    color: var(--primary);
+}
+
+/* =====================================================
+   ROUTE PLANNER
+===================================================== */
+
+#route-results {
+    background: white;
+    padding: 22px;
+    margin-top: 20px;
+    border-radius: 12px;
+    border: 1px solid var(--border);
+    box-shadow: var(--shadow);
+}
+
+#route-results ol {
+    padding-left: 25px;
+    margin: 15px 0;
+}
+
+#route-results li {
+    padding: 7px;
+    font-weight: 600;
+}
+
+/* =====================================================
+   MAP
+===================================================== */
+
+#map,
+#tourism-map {
+    width: 100%;
+    height: 420px;
+    border-radius: 14px;
+    border: 1px solid var(--border);
+    box-shadow: var(--shadow);
+    z-index: 1;
+}
+
+/* =====================================================
+   STATUS MESSAGES
+===================================================== */
+
+#feedback-status,
+#destination-status {
+    margin-top: 12px;
+    color: var(--secondary);
+    font-weight: 600;
+}
+
+/* =====================================================
+   FOOTER
+===================================================== */
+
+footer {
+    background: var(--primary);
+    color: white;
+    text-align: center;
+    padding: 25px;
     margin-top: 50px;
 }
 
-.feature {
-    background: white;
-    padding: 30px;
-    border-radius: 8px;
-}
-
-.feature h3 {
-    margin-bottom: 12px;
-    font-size: 22px;
-}
-
-.feature p {
-    color: #666;
-    line-height: 1.7;
-}
-
-
-/* BUSINESS */
-
-.business-section {
-    padding: 100px 8%;
-    background: #222;
-    color: white;
-}
-
-.business-section p {
-    max-width: 650px;
-    line-height: 1.7;
-    color: #ccc;
-}
-
-.business-button {
-    margin-top: 30px;
-    padding: 15px 25px;
-    border: none;
-    border-radius: 5px;
-    background: white;
-    color: #222;
-    font-weight: 600;
-}
-
-
-/* FOOTER */
-
-footer {
-    padding: 35px 8%;
-    background: #111;
-    color: white;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
 footer p {
-    color: #aaa;
+    color: #d1fae5;
 }
 
-
-/* RESPONSIVE */
+/* =====================================================
+   RESPONSIVE DESIGN
+===================================================== */
 
 @media (max-width: 768px) {
 
-    .nav-links {
-        display: none;
-    }
-
-    .hero h1 {
-        font-size: 45px;
-    }
-
-    .planning-form {
-        grid-template-columns: 1fr;
-    }
-
-    .recommend-button {
-        grid-column: span 1;
-    }
-
-    .features {
-        grid-template-columns: 1fr;
-    }
-
-    footer {
+    nav,
+    .navbar {
         flex-direction: column;
-        gap: 15px;
+        text-align: center;
+    }
+
+    nav a,
+    .navbar a {
+        display: inline-block;
+        margin: 7px;
+    }
+
+    main,
+    .container {
+        width: 94%;
+    }
+
+    section {
+        padding: 30px 0;
+    }
+
+    .hero {
+        padding: 55px 5%;
+    }
+
+    #map,
+    #tourism-map {
+        height: 320px;
+    }
+
+    .destination-results,
+    #destination-results,
+    #recommendation-results,
+    #hidden-gems-results {
+        grid-template-columns: 1fr;
     }
 }

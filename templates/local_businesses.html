@@ -1,0 +1,328 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#174c35">
+
+    <title>Local Businesses | SmartTour</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            background: #f1f7f2;
+            color: #263b2c;
+        }
+
+        header {
+            background: #174c35;
+            color: white;
+            padding: 25px 8%;
+        }
+
+        header h1 {
+            margin-top: 0;
+        }
+
+        header a {
+            display: inline-block;
+            color: white;
+            background: #258b59;
+            padding: 11px 17px;
+            border-radius: 7px;
+            text-decoration: none;
+            margin: 10px 8px 0 0;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 35px auto;
+            padding: 0 20px;
+        }
+
+        .filter-panel {
+            display: grid;
+            grid-template-columns: 2fr 1fr auto;
+            gap: 12px;
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            margin: 22px 0;
+            box-shadow: 0 4px 15px #0001;
+        }
+
+        .filter-panel input,
+        .filter-panel select {
+            width: 100%;
+            padding: 13px;
+            border: 1px solid #cbd8ce;
+            border-radius: 7px;
+            font-size: 15px;
+        }
+
+        .clear-btn {
+            background: #174c35;
+            color: white;
+            border: none;
+            padding: 12px 18px;
+            border-radius: 7px;
+            cursor: pointer;
+        }
+
+        .result-count {
+            margin: 15px 0;
+            color: #55705d;
+        }
+
+        .business-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 20px;
+        }
+
+        .card {
+            background: white;
+            padding: 23px;
+            border-radius: 13px;
+            box-shadow: 0 4px 15px #0001;
+            transition: transform 0.2s;
+        }
+
+        .card:hover {
+            transform: translateY(-4px);
+        }
+
+        .card h2 {
+            margin-top: 0;
+            color: #174c35;
+        }
+
+        .category {
+            display: inline-block;
+            color: #18834d;
+            background: #e7f5eb;
+            padding: 6px 10px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: bold;
+        }
+
+        .profile-btn,
+        .contact {
+            display: inline-block;
+            color: white;
+            padding: 10px 16px;
+            text-decoration: none;
+            border-radius: 6px;
+            margin-top: 10px;
+        }
+
+        .profile-btn {
+            background: #174c35;
+        }
+
+        .contact {
+            background: #1c7549;
+        }
+
+        .empty-state {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            text-align: center;
+            display: none;
+        }
+
+        @media (max-width: 650px) {
+            .filter-panel {
+                grid-template-columns: 1fr;
+            }
+
+            header {
+                padding: 22px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+    <h1>SmartTour Local Businesses</h1>
+
+    <p>Discover local homestays, hotels and tourism services.</p>
+
+    <a href="/business/register">+ Register Your Business</a>
+    <a href="/">Back to SmartTour</a>
+</header>
+
+<div class="container">
+
+    <h2>Explore Local Businesses</h2>
+
+    <p>Find services and businesses around your destination.</p>
+
+    {% if businesses %}
+
+    <div class="filter-panel">
+
+        <input
+            type="search"
+            id="business-search"
+            placeholder="Search by business name or location..."
+        >
+
+        <select id="category-filter">
+            <option value="">All Categories</option>
+            <option value="homestay">Homestay</option>
+            <option value="hotel">Hotel</option>
+            <option value="resort">Resort</option>
+            <option value="guest house">Guest House</option>
+            <option value="restaurant">Restaurant</option>
+            <option value="cafe">Cafe</option>
+            <option value="local guide">Local Guide</option>
+            <option value="travel provider">Travel Provider</option>
+        </select>
+
+        <button class="clear-btn" id="clear-filters" type="button">
+            Clear Filters
+        </button>
+
+    </div>
+
+    <p class="result-count" id="result-count"></p>
+
+    <div class="business-grid">
+
+        {% for business in businesses %}
+
+        <div
+            class="card business-card"
+            data-name="{{ business['business_name']|lower }}"
+            data-location="{{ business['location']|lower }}"
+            data-category="{{ business['category']|lower }}"
+        >
+
+            <h2>{{ business['business_name'] }}</h2>
+
+            <span class="category">
+                {{ business['category'] }}
+            </span>
+
+            <p><b>Location:</b> {{ business['location'] }}</p>
+
+            <p>
+                <b>Price:</b>
+                {{ business['price'] or 'Contact for pricing' }}
+            </p>
+
+            <p>
+                {{ business['description'] or
+                'Explore this local business on SmartTour.' }}
+            </p>
+
+            <p>
+                <b>Facilities:</b>
+                {{ business['facilities'] or 'Contact owner for details' }}
+            </p>
+
+            <a class="profile-btn"
+               href="{{ url_for('business_profile', business_id=business['id']) }}">
+                View Full Profile →
+            </a>
+
+            <br>
+
+            <a class="contact"
+               href="tel:{{ business['phone'] }}">
+                Contact Owner
+            </a>
+
+        </div>
+
+        {% endfor %}
+
+    </div>
+
+    <div class="empty-state" id="empty-state">
+        <h3>No matching businesses found.</h3>
+        <p>Try another search term or category.</p>
+    </div>
+
+    {% else %}
+
+    <div class="empty-state" style="display:block;">
+        <h3>No approved businesses listed yet.</h3>
+        <p>Local business owners can register their businesses with SmartTour.</p>
+        <a href="/business/register">Register Your Business</a>
+    </div>
+
+    {% endif %}
+
+</div>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+
+    const searchInput = document.getElementById("business-search");
+    const categoryFilter = document.getElementById("category-filter");
+    const clearButton = document.getElementById("clear-filters");
+    const cards = document.querySelectorAll(".business-card");
+    const resultCount = document.getElementById("result-count");
+    const emptyState = document.getElementById("empty-state");
+
+    if (!searchInput) return;
+
+    function filterBusinesses() {
+
+        const searchTerm = searchInput.value.trim().toLowerCase();
+        const selectedCategory = categoryFilter.value.toLowerCase();
+
+        let visibleCount = 0;
+
+        cards.forEach(function (card) {
+
+            const matchesSearch =
+                card.dataset.name.includes(searchTerm) ||
+                card.dataset.location.includes(searchTerm);
+
+            const matchesCategory =
+                !selectedCategory ||
+                card.dataset.category === selectedCategory;
+
+            const shouldShow = matchesSearch && matchesCategory;
+
+            card.style.display = shouldShow ? "block" : "none";
+
+            if (shouldShow) visibleCount++;
+        });
+
+        resultCount.textContent =
+            "Showing " + visibleCount + " of " + cards.length + " businesses";
+
+        emptyState.style.display =
+            visibleCount === 0 ? "block" : "none";
+    }
+
+    searchInput.addEventListener("input", filterBusinesses);
+    categoryFilter.addEventListener("change", filterBusinesses);
+
+    clearButton.addEventListener("click", function () {
+        searchInput.value = "";
+        categoryFilter.value = "";
+        filterBusinesses();
+    });
+
+    filterBusinesses();
+
+});
+</script>
+
+</body>
+</html>

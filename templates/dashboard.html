@@ -1,0 +1,580 @@
+{% extends "base.html" %}
+
+
+{% block content %}
+
+<!-- TOP BAR -->
+
+<header class="topbar">
+
+    <div>
+
+        <p class="eyebrow">
+            TOURISM INTELLIGENCE PLATFORM
+        </p>
+
+        <h1>
+            Welcome to <span>SmartTour AI</span>
+        </h1>
+
+        <p class="subtitle">
+            Discover smarter routes, avoid crowds and plan personalized trips.
+        </p>
+
+    </div>
+
+
+    <div class="top-actions">
+
+        <button class="notification">
+            🔔
+        </button>
+
+        <div class="user-chip">
+
+            <div class="avatar">
+                K
+            </div>
+
+            <div>
+                <strong>Traveler</strong>
+                <small>Explorer</small>
+            </div>
+
+        </div>
+
+    </div>
+
+</header>
+
+
+<!-- KPI CARDS -->
+
+<section class="stats-grid">
+
+    <div class="stat-card">
+
+        <div class="stat-icon purple">
+            📍
+        </div>
+
+        <div>
+
+            <p>Total Destinations</p>
+
+            <h2>
+                {{ total_places }}
+            </h2>
+
+            <span class="positive">
+                ↑ Tourism database
+            </span>
+
+        </div>
+
+    </div>
+
+
+    <div class="stat-card">
+
+        <div class="stat-icon blue">
+            👥
+        </div>
+
+        <div>
+
+            <p>Average Crowd</p>
+
+            <h2>
+                {{ average_crowd }}%
+            </h2>
+
+            <span class="warning">
+                Live intelligence
+            </span>
+
+        </div>
+
+    </div>
+
+
+    <div class="stat-card">
+
+        <div class="stat-icon green">
+            ⭐
+        </div>
+
+        <div>
+
+            <p>Average Rating</p>
+
+            <h2>
+                {{ average_rating }}
+            </h2>
+
+            <span class="positive">
+                Tourist satisfaction
+            </span>
+
+        </div>
+
+    </div>
+
+
+    <div class="stat-card">
+
+        <div class="stat-icon orange">
+            🤖
+        </div>
+
+        <div>
+
+            <p>AI Recommendations</p>
+
+            <h2>
+                Ready
+            </h2>
+
+            <span class="positive">
+                System online
+            </span>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- MAIN DASHBOARD -->
+
+<section class="dashboard-grid">
+
+
+    <!-- MAP -->
+
+    <div class="panel map-panel">
+
+        <div class="panel-header">
+
+            <div>
+
+                <h2>Tourism Intelligence Map</h2>
+
+                <p>
+                    Explore destinations and current crowd conditions.
+                </p>
+
+            </div>
+
+            <div class="map-legend">
+
+                <span>
+                    <i class="dot low"></i>
+                    Low
+                </span>
+
+                <span>
+                    <i class="dot medium"></i>
+                    Medium
+                </span>
+
+                <span>
+                    <i class="dot high"></i>
+                    High
+                </span>
+
+            </div>
+
+        </div>
+
+
+        <div id="tourism-map"></div>
+
+    </div>
+
+
+    <!-- AI INSIGHT -->
+
+    <div class="panel insight-panel">
+
+        <div class="panel-header">
+
+            <div>
+
+                <p class="eyebrow">
+                    AI INTELLIGENCE
+                </p>
+
+                <h2>Smart Insights</h2>
+
+            </div>
+
+            <span class="ai-status">
+                ● Online
+            </span>
+
+        </div>
+
+
+        <div class="ai-card">
+
+            <div class="ai-icon">
+                ✨
+            </div>
+
+            <div>
+
+                <h3>
+                    Crowd-aware planning
+                </h3>
+
+                <p>
+                    SmartTour can identify destinations
+                    with lower crowd levels and prioritize
+                    them during itinerary generation.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div class="ai-card">
+
+            <div class="ai-icon">
+                🧭
+            </div>
+
+            <div>
+
+                <h3>
+                    Personalized routes
+                </h3>
+
+                <p>
+                    Your preferences, available time,
+                    budget and crowd tolerance will
+                    influence route recommendations.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <button
+            class="primary-btn"
+            onclick="openPlanner()"
+        >
+            🤖 Generate AI Trip
+        </button>
+
+    </div>
+
+</section>
+
+
+<!-- LOWER SECTION -->
+
+<section class="lower-grid">
+
+
+    <!-- POPULAR DESTINATIONS -->
+
+    <div class="panel">
+
+        <div class="panel-header">
+
+            <div>
+
+                <h2>Popular Destinations</h2>
+
+                <p>
+                    Based on tourism popularity data.
+                </p>
+
+            </div>
+
+            <button class="text-button">
+                View all →
+            </button>
+
+        </div>
+
+
+        <div class="destination-list">
+
+            {% for place in places[:6] %}
+
+            <div class="destination">
+
+                <div class="destination-number">
+                    {{ loop.index }}
+                </div>
+
+                <div class="destination-info">
+
+                    <h3>
+                        {{ place["name"] }}
+                    </h3>
+
+                    <span>
+                        {{ place["category"] }}
+                    </span>
+
+                </div>
+
+                <div class="destination-rating">
+
+                    ⭐ {{ place["rating"] }}
+
+                </div>
+
+                <div class="crowd-pill
+
+                    {% if place['crowd_level'] < 45 %}
+                        crowd-low
+                    {% elif place['crowd_level'] < 70 %}
+                        crowd-medium
+                    {% else %}
+                        crowd-high
+                    {% endif %}
+                ">
+
+                    {{ place["crowd_level"] }}%
+
+                </div>
+
+            </div>
+
+            {% endfor %}
+
+        </div>
+
+    </div>
+
+
+    <!-- CATEGORIES -->
+
+    <div class="panel">
+
+        <div class="panel-header">
+
+            <div>
+
+                <h2>Tourism Categories</h2>
+
+                <p>
+                    Available attractions.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div class="category-list">
+
+            {% for category in categories %}
+
+            <div class="category-row">
+
+                <div>
+
+                    <span class="category-name">
+                        {{ category["category"] }}
+                    </span>
+
+                    <div class="progress">
+
+                        <div
+                            class="progress-bar"
+                            style="width: {{ (category['count'] / total_places * 100)|round }}%;"
+                        ></div>
+
+                    </div>
+
+                </div>
+
+                <strong>
+                    {{ category["count"] }}
+                </strong>
+
+            </div>
+
+            {% endfor %}
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- AI PLANNER MODAL -->
+
+<div
+    id="plannerModal"
+    class="modal"
+>
+
+    <div class="modal-content">
+
+        <div class="modal-header">
+
+            <div>
+
+                <p class="eyebrow">
+                    AI TRIP PLANNER
+                </p>
+
+                <h2>
+                    Build Your Smart Itinerary
+                </h2>
+
+            </div>
+
+            <button
+                class="close-btn"
+                onclick="closePlanner()"
+            >
+                ×
+            </button>
+
+        </div>
+
+
+        <div class="planner-grid">
+
+            <div class="input-group">
+
+                <label>
+                    Interest
+                </label>
+
+                <select id="interest">
+
+                    <option value="Any">
+                        Any
+                    </option>
+
+                    <option value="Heritage">
+                        Heritage
+                    </option>
+
+                    <option value="Nature">
+                        Nature
+                    </option>
+
+                    <option value="Culture">
+                        Culture
+                    </option>
+
+                    <option value="Museum">
+                        Museum
+                    </option>
+
+                    <option value="Shopping">
+                        Shopping
+                    </option>
+
+                    <option value="Wildlife">
+                        Wildlife
+                    </option>
+
+                    <option value="Entertainment">
+                        Entertainment
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <div class="input-group">
+
+                <label>
+                    Budget (₹)
+                </label>
+
+                <input
+                    id="budget"
+                    type="number"
+                    value="1000"
+                    min="0"
+                >
+
+            </div>
+
+
+            <div class="input-group">
+
+                <label>
+                    Available Time (minutes)
+                </label>
+
+                <input
+                    id="availableTime"
+                    type="number"
+                    value="300"
+                    min="30"
+                >
+
+            </div>
+
+
+            <div class="input-group">
+
+                <label>
+                    Crowd Preference
+                </label>
+
+                <select id="crowdPreference">
+
+                    <option value="Low">
+                        Prefer Low Crowd
+                    </option>
+
+                    <option value="Medium">
+                        Medium Crowd
+                    </option>
+
+                    <option value="High">
+                        High Crowd
+                    </option>
+
+                </select>
+
+            </div>
+
+        </div>
+
+
+        <button
+            class="primary-btn"
+            onclick="generateRecommendations()"
+        >
+            ✨ Generate Recommendations
+        </button>
+
+
+        <div
+            id="recommendationResults"
+            class="recommendation-results"
+        ></div>
+
+    </div>
+
+</div>
+
+{% endblock %}
+
+
+{% block scripts %}
+
+<script
+    src="{{ url_for('static', filename='js/dashboard.js') }}">
+</script>
+
+{% endblock %}

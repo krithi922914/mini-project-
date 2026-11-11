@@ -1,0 +1,161 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>{{ business['business_name'] }} | SmartTour</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f1f7f2;
+            color: #263b2c;
+        }
+
+        header {
+            background: #174c35;
+            color: white;
+            padding: 25px 8%;
+        }
+
+        header a {
+            color: white;
+            text-decoration: none;
+        }
+
+        .container {
+            max-width: 850px;
+            margin: 45px auto;
+            padding: 0 20px;
+        }
+
+        .profile-card {
+            background: white;
+            padding: 35px;
+            border-radius: 15px;
+            box-shadow: 0 4px 18px #0001;
+        }
+
+        .category {
+            display: inline-block;
+            background: #e4f5e9;
+            color: #18834d;
+            padding: 8px 14px;
+            border-radius: 20px;
+            font-weight: bold;
+        }
+
+        h1 {
+            color: #174c35;
+        }
+
+        .detail {
+            padding: 15px 0;
+            border-bottom: 1px solid #e5ece6;
+        }
+
+        .contact {
+            display: inline-block;
+            background: #1c7549;
+            color: white;
+            padding: 13px 22px;
+            border-radius: 7px;
+            text-decoration: none;
+            margin-top: 20px;
+        }
+
+        .back {
+            display: inline-block;
+            margin-bottom: 20px;
+            color: #174c35;
+            text-decoration: none;
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+    <h2>✈ SmartTour</h2>
+    <p>Discover local tourism businesses</p>
+</header>
+
+<div class="container">
+
+    <a class="back" href="/local-businesses">
+        ← Back to Local Businesses
+    </a>
+
+    <div class="profile-card">
+
+        <span class="category">
+            {{ business['category'] }}
+        </span>
+
+        <h1>{{ business['business_name'] }}</h1>
+
+        <div class="detail">
+            <b>Location</b>
+            <p>{{ business['location'] }}</p>
+        </div>
+
+        <div class="detail">
+            <b>Price</b>
+            <p>{{ business['price'] or 'Contact for pricing' }}</p>
+        </div>
+
+        <div class="detail">
+            <b>About this business</b>
+            <p>
+                {{ business['description'] or
+                'Discover this local business through SmartTour.' }}
+            </p>
+        </div>
+
+        <div class="detail">
+            <b>Facilities and Services</b>
+            <p>
+                {{ business['facilities'] or
+                'Contact the owner for more details.' }}
+            </p>
+        </div>
+
+        <div class="detail">
+            <b>Owner</b>
+            <p>{{ business['owner_name'] }}</p>
+        </div>
+
+        <div class="detail">
+            <b>Contact Number</b>
+            <p>{{ business['phone'] }}</p>
+        </div>
+
+        <div class="detail">
+            <b>Email</b>
+            <p>{{ business['email'] }}</p>
+        </div>
+
+        <a class="contact"
+           href="tel:{{ business['phone'] }}">
+            Contact Business Owner
+        </a>
+
+        <a class="contact"
+           href="mailto:{{ business['email'] }}">
+            Send Email
+        </a>
+
+    </div>
+
+</div>
+
+</body>
+</html>

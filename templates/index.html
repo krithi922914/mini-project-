@@ -1,249 +1,304 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#087f68">
 
-    <title>SmartTour - Smart Travel Planning</title>
+    <title>SmartTour | AI-Powered Smart Tourism</title>
 
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
 </head>
 
 <body>
 
+<header>
     <nav class="navbar">
-        <div class="logo">SmartTour</div>
+        <a href="/" class="logo">SmartTour <span>✦</span></a>
 
         <div class="nav-links">
-            <a href="/">Home</a>
-            <a href="#discover">Discover</a>
-            <a href="#about">About</a>
-            <a href="#business">For Businesses</a>
+            <a href="#explore">Explore</a>
+            <a href="#recommendations">AI Planner</a>
+            <a href="#hidden-gems">Hidden Gems</a>
+            <a href="#route-planner">Route Planner</a>
+            <a href="#destination-map">Map</a>
+            <a href="#feedback">Feedback</a>
+            <a href="/local-businesses">Local Businesses</a>
+            <a href="/business/register">Register Business</a>
+            <a href="{{ url_for('business_admin_login') }}">Admin Login</a>
         </div>
     </nav>
+</header>
 
+<main>
 
+    <!-- HERO SECTION -->
     <section class="hero">
-
         <div class="hero-content">
-
-            <p class="tagline">TRAVEL • DISCOVER • EXPERIENCE</p>
+            <span class="badge">YOUR NEXT ADVENTURE STARTS HERE</span>
 
             <h1>
-                Plan your journey,
-                <span>your way.</span>
+                Travel smarter.<br>
+                Discover <span>more.</span>
             </h1>
 
-            <p class="hero-text">
-                SmartTour connects you with hotels, attractions,
-                restaurants and local experiences while helping
-                you create a personalized travel plan.
+            <p>
+                Explore destinations, discover hidden gems and
+                plan personalized journeys with SmartTour.
             </p>
 
-            <a href="#discover" class="start-button">
-                Start Planning
-            </a>
-
+            <div class="hero-actions">
+                <a href="#explore" class="btn">Explore Destinations ↗</a>
+                <a href="#recommendations" class="btn btn-secondary">
+                    Try AI Planner
+                </a>
+            </div>
         </div>
-
     </section>
 
-
-    <section id="discover" class="planning-section">
-
+    <!-- EXPLORE DESTINATIONS -->
+    <section id="explore" class="container">
         <div class="section-heading">
-            <p class="small-title">SMART PLANNING</p>
+            <div>
+                <span class="badge">EXPLORE</span>
+                <h2>Find your next destination</h2>
+                <p>Discover destinations from our tourism database.</p>
+            </div>
+        </div>
 
-            <h2>
-                Tell us what you want.
-            </h2>
+        <div class="search-panel">
+            <input type="search" id="destination-search"
+                   placeholder="Search destinations...">
+
+            <button type="button" class="btn" id="search-button">
+                Search
+            </button>
+        </div>
+
+        <div id="destination-results"
+             class="destination-grid"
+             aria-live="polite">
+            <p>Loading destinations...</p>
+        </div>
+
+        <p id="destination-status" role="status"></p>
+    </section>
+
+    <!-- AI RECOMMENDATION PLANNER -->
+    <section id="recommendations" class="container">
+        <div class="ai-section">
+            <span class="badge">SMARTTOUR AI</span>
+
+            <h2>Your personal travel planner</h2>
 
             <p>
-                We'll help you discover suitable travel options
-                based on your preferences.
+                Tell us your interests and discover destinations
+                recommended by our AI recommendation engine.
             </p>
+
+            <form id="recommendation-form">
+                <label for="travel-preferences">
+                    What kind of trip do you prefer?
+                </label>
+
+                <input type="text" id="travel-preferences"
+                       name="preferences"
+                       placeholder="Nature, adventure, culture..."
+                       required>
+
+                <button type="submit" class="btn">
+                    Get Recommendations ↗
+                </button>
+            </form>
+
+            <div id="recommendation-results"
+                 aria-live="polite"></div>
+        </div>
+    </section>
+
+    <!-- HIDDEN GEMS -->
+    <section id="hidden-gems" class="container">
+        <div class="hidden-gems">
+            <span class="badge">LESSER-KNOWN PLACES</span>
+
+            <h2>Discover hidden gems</h2>
+
+            <p>
+                Explore lesser-known destinations and discover
+                places beyond the usual tourist attractions.
+            </p>
+
+            <div id="hidden-gems-results"
+                 class="destination-grid"
+                 aria-live="polite">
+                <p>Loading hidden gems...</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ROUTE OPTIMIZATION -->
+    <section id="route-planner" class="container">
+        <div class="section-heading">
+            <div>
+                <span class="badge">SMART ROUTE PLANNER</span>
+                <h2>Plan your perfect route</h2>
+
+                <p>
+                    Select multiple destinations and discover
+                    an optimized visiting order.
+                </p>
+            </div>
         </div>
 
+        <div class="route-planner-card">
+            <label for="route-destinations">
+                Select your destinations
+            </label>
 
-        <form action=""/recommend" method="POST">
+            <select id="route-destinations"
+                    multiple size="7"
+                    aria-label="Select destinations for route optimization">
+                <option disabled>Loading destinations...</option>
+            </select>
+
+            <p>
+                Select at least two destinations.
+                Hold Ctrl while selecting multiple places.
+            </p>
+
+            <button type="button" class="btn"
+                    id="optimize-route-button">
+                Optimize My Route ↗
+            </button>
+
+            <div id="route-results" aria-live="polite"></div>
+        </div>
+    </section>
+
+    <!-- INTERACTIVE MAP -->
+    <section id="destination-map" class="container">
+        <div class="section-heading">
+            <div>
+                <span class="badge">EXPLORE THE MAP</span>
+                <h2>Discover destinations on the map</h2>
+
+                <p>
+                    Explore destinations using their geographical
+                    coordinates.
+                </p>
+            </div>
+        </div>
+
+        <div id="map"
+             role="application"
+             aria-label="Interactive tourism map">
+        </div>
+    </section>
+
+    <!-- FEEDBACK -->
+    <section id="feedback" class="container">
+        <div class="section-heading">
+            <div>
+                <span class="badge">YOUR FEEDBACK MATTERS</span>
+                <h2>Help us improve SmartTour</h2>
+
+                <p>
+                    Share your experience with the destinations.
+                </p>
+            </div>
+        </div>
+
+        <form id="feedback-form">
+            <label for="feedback-destination">
+                Destination name
+            </label>
+
+            <input type="text"
+                   id="feedback-destination"
+                   name="destination_name"
+                   placeholder="Enter destination name"
+                   required>
+
+            <label for="feedback-action">
+                Your feedback
+            </label>
+
+            <select id="feedback-action" name="action" required>
+                <option value="">Choose feedback</option>
+                <option value="like">I liked this destination</option>
+                <option value="dislike">I did not like this destination</option>
+                <option value="rating">Rate this destination</option>
+            </select>
+
+            <label for="feedback-rating">
+                Rating (1–5)
+            </label>
+
+            <select id="feedback-rating" name="rating">
+                <option value="">Choose rating</option>
+                <option value="1">1 - Poor</option>
+                <option value="2">2 - Fair</option>
+                <option value="3">3 - Good</option>
+                <option value="4">4 - Very Good</option>
+                <option value="5">5 - Excellent</option>
+            </select>
+
+            <button type="submit" class="btn">
+                Submit Feedback
+            </button>
+
+            <p id="feedback-status" role="status"></p>
         </form>
-
-            <div class="form-group">
-                <label for="destination">Destination</label>
-
-                <input
-                    type="text"
-                    id="destination"
-                    placeholder="Example: Mysore"
-                >
-            </div>
-
-
-            <div class="form-group">
-                <label for="budget">Budget (₹)</label>
-
-                <input
-                    type="number"
-                    id="budget"
-                    placeholder="Example: 10000"
-                >
-            </div>
-
-
-            <div class="form-group">
-                <label for="days">Available Days</label>
-
-                <input
-                    type="number"
-                    id="days"
-                    min="1"
-                    placeholder="Example: 3"
-                >
-            </div>
-
-
-            <div class="form-group">
-                <label for="interest">Interest</label>
-
-                <select id="interest">
-
-                    <option value="">
-                        Select your interest
-                    </option>
-
-                    <option value="history">
-                        History
-                    </option>
-
-                    <option value="nature">
-                        Nature
-                    </option>
-
-                    <option value="food">
-                        Food
-                    </option>
-
-                    <option value="adventure">
-                        Adventure
-                    </option>
-
-                    <option value="culture">
-                        Culture
-                    </option>
-
-                </select>
-            </div>
-
-
-            <div class="form-group">
-                <label for="travel-style">Travel Style</label>
-
-                <select id="travel-style">
-
-                    <option value="">
-                        Select travel style
-                    </option>
-
-                    <option value="relaxed">
-                        Relaxed
-                    </option>
-
-                    <option value="adventure">
-                        Adventure
-                    </option>
-
-                    <option value="cultural">
-                        Cultural
-                    </option>
-
-                    <option value="budget">
-                        Budget Friendly
-                    </option>
-
-                </select>
-            </div>
-
-
-            <button type="submit">
-    Get Recommendations
-</button>
-
-        </form>
-
     </section>
 
+    <!-- LOCAL BUSINESS PROMOTION -->
+    <section class="container">
+        <div class="ai-section">
+            <span class="badge">SUPPORT LOCAL TOURISM</span>
 
-    <section id="about" class="about-section">
+            <h2>Are you a local business owner?</h2>
 
-        <div>
-            <p class="small-title">WHY SMARTTOUR?</p>
+            <p>
+                List your homestay, hotel, restaurant, resort
+                or tourism service on SmartTour and reach travellers.
+            </p>
 
-            <h2>
-                One connected tourism journey.
-            </h2>
+            <div class="hero-actions">
+                <a href="/business/register" class="btn">
+                    Register Your Business ↗
+                </a>
+
+                <a href="/local-businesses" class="btn btn-secondary">
+                    Explore Local Businesses
+                </a>
+            </div>
         </div>
-
-        <div class="features">
-
-            <div class="feature">
-                <h3>Discover</h3>
-                <p>
-                    Explore attractions, hotels, restaurants
-                    and local experiences.
-                </p>
-            </div>
-
-            <div class="feature">
-                <h3>Personalize</h3>
-                <p>
-                    Get recommendations based on your
-                    budget, interests and travel preferences.
-                </p>
-            </div>
-
-            <div class="feature">
-                <h3>Plan</h3>
-                <p>
-                    Organize your available time into
-                    a practical travel itinerary.
-                </p>
-            </div>
-
-        </div>
-
     </section>
 
+</main>
 
-    <section id="business" class="business-section">
+<!-- FOOTER -->
+<footer>
+    <h3>SmartTour ✦</h3>
 
-        <p class="small-title">FOR TOURISM BUSINESSES</p>
+    <p>Discover places. Plan smarter. Travel better.</p>
 
-        <h2>
-            Help travelers discover your business.
-        </h2>
+    <p>
+        <a href="/local-businesses">Local Businesses</a> |
+        <a href="/business/register">Business Registration</a> |
+        <a href="{{ url_for('business_admin_login') }}">Admin Login</a>
+    </p>
 
-        <p>
-            Hotels, local businesses and tourism providers
-            can manage their services, offers and availability
-            through SmartTour.
-        </p>
+    <p>© 2026 SmartTour. All rights reserved.</p>
+</footer>
 
-        <button class="business-button">
-            Business Portal
-        </button>
+<!-- LEAFLET MAP -->
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 
-    </section>
-
-
-    <footer>
-
-        <div class="logo">SmartTour</div>
-
-        <p>
-            Smarter planning. Better experiences.
-        </p>
-
-    </footer>
+<!-- SMARTTOUR JAVASCRIPT -->
+<script src="{{ url_for('static', filename='js/app.js') }}" defer></script>
 
 </body>
 </html>
